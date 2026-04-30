@@ -1,66 +1,58 @@
-# FraudShield: A Real-Time, Hybrid Fraud Decisioning Platform
+# FraudShield: Real-Time Hybrid Fraud Decisioning Platform
 
-**Empowering analysts with transparent, low-latency fraud detection and explainable AI.**
+FraudShield is an end-to-end fraud operations platform designed to provide transparent, explainable AI decisions for financial analysts. 
 
-## The "Why"
-Traditional fraud detection often suffers from "black-box" models that analysts cannot trust or influence, leading to high friction and missed signals. **FraudShield** bridges this gap by combining deterministic business rules with advanced machine learning and real-time SHAP explainability to provide actionable, transparent decisions in milliseconds.
+## Performance Metrics
 
-## 🏗️ Architecture
+| Metric | Result |
+| :--- | :--- |
+| **ROC-AUC** | 0.9673 |
+| **Precision** | 6.94% |
+| **Recall** | 76.72% |
+
+**Recommended Operational Thresholds:**
+- **Review:** 0.40
+- **Block:** 0.80
+
+*(For full performance breakdown, see [dataset_validation_report.md](dataset_validation_report.md))*
+
+## Architecture
 ```mermaid
-graph TD
-    A[Transaction Simulator / External Data] -->|Real-time Stream| B[FastAPI Backend]
-    B --> C[Feature Engineering Layer]
-    C --> D[Hybrid Decision Engine]
-    
-    subgraph Decision Engine
-        D1[LGBM Supervised Model]
-        D2[Isolation Forest Anomaly]
-        D3[Deterministic Rules Engine]
-    end
-    
-    D1 & D2 & D3 --> E[Decision Combiner]
-    E --> F[Explainability Layer - SHAP]
-    F --> G[SQLite Persistence]
-    G --> H[Next.js Dashboard]
-    
-    H -->|Feedback/Labels| G
-    G -->|Retraining| D
+flowchart LR
+    A[Transaction Stream / CSV Import] --> B[Feature Engineering]
+    B --> C[Rules Engine]
+    B --> D[Isolation Forest]
+    B --> E[LightGBM Classifier]
+    C --> F[Hybrid Risk Scoring]
+    D --> F
+    E --> F
+    F --> G[Decision Engine: Approve / Review / Block]
+    F --> H[SHAP Explainability]
+    G --> I[FastAPI Backend]
+    H --> I
+    I --> J[Next.js Dashboard]
+    J --> K[Analyst Feedback Loop]
+    K --> L[Stored Labels / Retraining Data]
 ```
 
-## 🚀 Key Features
-| Feature | Description |
-| :--- | :--- |
-| **Hybrid Decisioning** | Integrates LightGBM, Isolation Forest, and deterministic business rules for robust scoring. |
-| **Real-Time SHAP** | Provides human-readable reason codes for every alert, explaining exactly *why* a score was high. |
-| **Analyst Triage** | High-density dashboard optimized for rapid review, blocking, and approval workflows. |
-| **Closed-Loop Feedback** | Analyst actions are automatically persisted to improve future model retraining cycles. |
-| **Operational Telemetry** | Near-real-time monitoring of system health, decision latency, and alert queue volume. |
+## Screenshots
 
-## 📊 Operational Demonstration
-### Live Monitor in Action
-*Monitoring real-time transaction streams with millisecond scoring and explainability.*
-![Live Monitor](./app/public/assets/live_monitor.png)
+### Overview
+![FraudShield Overview](assets/overview.jpg)
 
-### Dashboard Overview
-*Consolidated view of platform health, alert precision, and capture rates.*
-![Dashboard](./app/public/assets/dashboard.png)
+### Live Monitor
+![FraudShield Live Monitor](assets/live-monitor.jpg)
 
-## 📈 Performance Results
-- **Model Precision**: **0.96 ROC-AUC** achieved on the PaySim validation dataset.
-- **Noise Reduction**: **50% reduction** in alert noise by resolving "Cold Start" feature bias.
-- **Latency**: Sub-50ms end-to-end decisioning latency including SHAP explanation generation.
+## Key Features
+- **Hybrid Decisioning:** LightGBM, Isolation Forest, and rules-based scoring.
+- **Explainable Alerts:** SHAP-based feature attribution for every decision.
+- **Analyst Triage:** High-density dashboard for review/block workflows.
+- **Operational Telemetry:** Real-time monitoring of system health and latency.
 
-## 🛠️ Quick Start
+## Quick Start
 ```bash
-# 1. Install dependencies
-pip install -r requirements.txt && npm install --prefix app
-
-# 2. Initialize and Train
-python run.py --init  # Generates data and trains hybrid models
-
-# 3. Launch Platform
+pip install -r requirements.txt
+npm install --prefix app
+python run.py --init
 python run.py
 ```
-
----
-**Tech Stack**: Python, LightGBM, FastAPI, Next.js, SQLite, SHAP, Mermaid.js.
