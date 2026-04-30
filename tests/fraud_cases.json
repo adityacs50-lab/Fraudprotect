@@ -1,0 +1,72 @@
+[
+  {
+    "description": "Account Takeover + Impossible Travel",
+    "user_id": "u_fraud_1",
+    "timestamp": "2023-11-01T10:00:00Z",
+    "amount": 2500,
+    "merchant_category": "electronics",
+    "payment_method": "credit_card",
+    "device_id": "dev_new_1",
+    "latitude": 34.0522,
+    "longitude": -118.2437,
+    "expected_action": "BLOCK",
+    "expected_severity": "critical",
+    "note": "First tx to establish baseline"
+  },
+  {
+    "description": "Account Takeover + Impossible Travel",
+    "user_id": "u_fraud_1",
+    "timestamp": "2023-11-01T11:00:00Z",
+    "amount": 2600,
+    "merchant_category": "electronics",
+    "payment_method": "credit_card",
+    "device_id": "dev_new_2",
+    "latitude": 40.7128,
+    "longitude": -74.0060,
+    "expected_action": "BLOCK",
+    "expected_severity": "critical",
+    "note": "Impossible travel from LA to NY in 1 hr"
+  },
+  {
+    "description": "Velocity Spike (Card Testing)",
+    "user_id": "u_fraud_2",
+    "timestamp": "2023-11-02T01:15:00Z",
+    "amount": 1.50,
+    "merchant_category": "subscription",
+    "payment_method": "debit_card",
+    "device_id": "dev_2",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "expected_action": "REVIEW",
+    "expected_severity": "medium",
+    "note": "Low amount at night"
+  },
+  {
+    "description": "Amount Spike (Checkout)",
+    "user_id": "u_fraud_3",
+    "timestamp": "2023-11-03T12:00:00Z",
+    "amount": 5000,
+    "merchant_category": "jewelry",
+    "payment_method": "credit_card",
+    "device_id": "dev_3",
+    "latitude": 48.8566,
+    "longitude": 2.3522,
+    "expected_action": "BLOCK",
+    "expected_severity": "high",
+    "note": "High risk merchant, high amount"
+  },
+  {
+    "description": "Legitimate Safe Tx",
+    "user_id": "u_safe_1",
+    "timestamp": "2023-11-04T09:00:00Z",
+    "amount": 12.00,
+    "merchant_category": "grocery",
+    "payment_method": "upi",
+    "device_id": "dev_safe",
+    "latitude": 37.7749,
+    "longitude": -122.4194,
+    "expected_action": "APPROVE",
+    "expected_severity": "none",
+    "note": "Normal everyday purchase"
+  }
+]
