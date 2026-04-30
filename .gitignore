@@ -173,3 +173,14 @@ dataset/kaggle_mapped.csv
 scratch/
 .gemini/
 .DS_Store
+
+dataset/*.csv
+data/*.db
+
+dataset/*.csv
+data/*.db
+
+dataset/*.csv
+data/*.db
+
+models/*.joblib
